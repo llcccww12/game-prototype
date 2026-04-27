@@ -87,7 +87,6 @@ func _physics_process(delta: float):
 	_handle_combat(delta)
 	_handle_dodge(delta)
 	_handle_stamina(delta)
-	_handle_invulnerability(delta)
 	_handle_passives(delta)
 
 	move_and_slide()
