@@ -1,0 +1,61 @@
+# Production Progress Log
+
+## 2026-04-27 - pc-001
+- Implemented Virtual Joystick Movement
+- Created virtual_joystick.gd with touch-based joystick
+- Updated player.gd to use Global.joystick_input for movement
+- Movement speed: 200px/s, dead zone: 10px, max drag: 50px
+- Player sprite flips based on horizontal movement direction
+- **Learnings:** Godot 4.6 uses CharacterBody2D for top-down movement, not KinematicBody2D (deprecated). Touch input uses InputEventScreenTouch and InputEventScreenDrag.
+
+## 2026-04-27 - pc-002
+- Implemented Game State Machine
+- States: MENU, PLAYING, PAUSED, DEAD, VICTORY
+- MENU -> PLAYING: main_menu "Start" button
+- PLAYING -> DEAD: player HP reaches 0
+- PLAYING -> VICTORY: boss HP reaches 0
+- DEAD/VICTORY -> MENU: retry/menu buttons
+- State transitions emit signals for other systems to react
+- **Learnings:** Use enum for game states, emit signals from state changes so UI and gameplay can react.
+
+## 2026-04-27 - pc-003
+- Implemented Player HP and Stamina
+- Player max HP: 100, max Stamina: 100
+- HP decreases on enemy hit (emit health_changed signal)
+- HP clamped to 0-max range
+- Stamina regenerates 10/second when not dodging
+- Cannot dodge when stamina < 20
+- **Learnings:** Use signals for health/stamina changes so HUD can update.
+
+## 2026-04-27 - pc-004
+- Implemented Room Manager
+- Generates 3 random normal rooms + 1 Boss room (always last)
+- Room order randomized using shuffle()
+- Tracks cleared rooms in Global.rooms_cleared
+- Room transitions handled by game.gd _spawn_room()
+- Enemies spawned based on room type
+- **Learnings:** Use room indices [0,1,2] shuffled for normal rooms, index 3 for boss.
+
+## 2026-04-27 - ct-001 to ct-009 (Combat System)
+- Three-Hit Combo: 20/25/30 damage, 0.4s window, knockback
+- Dodge: 20 stamina, 0.3s i-frames, 0.5s cooldown
+- Stamina Regen: 10/second when not dodging
+- Skills: 剑气斩 (AOE 30dmg 5s), 飞燕回翔 (Dash 15dmg 4s), 冰魄掌 (Ice 25dmg 6s), 御风步 (Blink 10dmg 3s), 破军 (Nuke 50dmg 15s)
+- Passives: 血战 (+20% dmg low HP), 铁壁 (-10% dmg), 连斩 (kill streak = atk speed), 吸血 (5% lifesteal), 疾风 (+15% move)
+- **Learnings:** Skill cooldowns managed in player.gd, effects created as nodes spawned on use.
+
+## 2026-04-27 - em-001 to em-003 (Enemy AI)
+- Melee: chases at 80px/s, 30 HP, 20 contact damage
+- Ranged: maintains 150px distance, shoots arrows (15 dmg) every 2s, 20 HP
+- Boss: 300 HP, 3 attack patterns (charge/slam/summon), phase 2 at 50% HP (+30% speed)
+- **Learnings:** Use inheritance (Enemy base class), override _ai_behavior for specific behaviors.
+
+## 2026-04-27 - ui-001 to ui-004 (HUD & UI)
+- Health bar: green (>50%) -> yellow (25-50%) -> red (<25%)
+- Stamina bar: blue, below health
+- Room progress: 4 dots in top bar
+- Passive icons: bottom-right, 3 slots
+- Skill buttons with cooldown labels
+- Death screen: "你死了" + "再来一局"
+- Victory screen: "通关成功" + "再玩一次"
+- **Learnings:** Use CanvasLayer for UI, emit signals for state changes.
