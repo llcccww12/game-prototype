@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://ranged_enemy"]
+
+[ext_resource type="Script" path="res://enemies/ranged_enemy.gd" id="1_ranged"]
+[ext_resource type="Texture2D" uid="uid://cmyw7fmkbaox3" path="res://monochrome_tilemap_transparent.png" id="2_tile"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_archer"]
+atlas = ExtResource("2_tile")
+region = Rect2(17, 153, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ranged"]
+radius = 10.0
+
+[node name="RangedEnemy" type="CharacterBody2D"]
+script = ExtResource("1_ranged")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_archer")
+offset = Vector2(0, -4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ranged")

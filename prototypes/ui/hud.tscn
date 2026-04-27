@@ -1,0 +1,294 @@
+[gd_scene load_steps=2 format=3 uid="uid://hud"]
+
+[ext_resource type="Script" path="res://ui/hud.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="HealthBar" type="ProgressBar" parent="TopBar"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="StaminaBar" type="ProgressBar" parent="TopBar"]
+custom_minimum_size = Vector2(200, 15)
+layout_mode = 2
+max_value = 100.0
+value = 100.0
+show_percentage = false
+fill_mode = 1
+
+[node name="RoomProgress" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Dot1" type="ColorRect" parent="TopBar/RoomProgress"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Dot2" type="ColorRect" parent="TopBar/RoomProgress"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Dot3" type="ColorRect" parent="TopBar/RoomProgress"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Dot4" type="ColorRect" parent="TopBar/RoomProgress"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+color = Color(0.5, 0.5, 0.5, 1)
+
+[node name="Passives" type="HBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -130.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_constants/separation = 5
+
+[node name="Passive1" type="Panel" parent="Passives"]
+visible = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+color = Color(0.2, 0.2, 0.2, 0.8)
+
+[node name="Label" type="Label" parent="Passives/Passive1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "血"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Passive2" type="Panel" parent="Passives"]
+visible = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+color = Color(0.2, 0.2, 0.2, 0.8)
+
+[node name="Label" type="Label" parent="Passives/Passive2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "铁"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Passive3" type="Panel" parent="Passives"]
+visible = false
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+color = Color(0.2, 0.2, 0.2, 0.8)
+
+[node name="Label" type="Label" parent="Passives/Passive3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 16
+text = "连"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkillBar" type="HBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -310.0
+offset_top = -130.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="Skill1" type="Button" parent="SkillBar"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "剑气"
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Skill1"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -10.0
+offset_right = 15.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Skill2" type="Button" parent="SkillBar"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "飞燕"
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Skill2"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -10.0
+offset_right = 15.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Skill3" type="Button" parent="SkillBar"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "冰魄"
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Skill3"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -10.0
+offset_right = 15.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Skill4" type="Button" parent="SkillBar"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "御风"
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Skill4"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -10.0
+offset_right = 15.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Skill5" type="Button" parent="SkillBar"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+text = "破军"
+
+[node name="CooldownLabel" type="Label" parent="SkillBar/Skill5"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -10.0
+offset_right = 15.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionButtons" type="VBoxContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -130.0
+offset_top = -180.0
+offset_right = -10.0
+offset_bottom = -150.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="AttackButton" type="Button" parent="ActionButtons"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+text = "攻击"
+
+[node name="DodgeButton" type="Button" parent="ActionButtons"]
+custom_minimum_size = Vector2(120, 50)
+layout_mode = 2
+text = "闪避"
+
+[connection signal="pressed" from="SkillBar/Skill1" to="." method="_on_skill_1_pressed"]
+[connection signal="pressed" from="SkillBar/Skill2" to="." method="_on_skill_2_pressed"]
+[connection signal="pressed" from="SkillBar/Skill3" to="." method="_on_skill_3_pressed"]
+[connection signal="pressed" from="SkillBar/Skill4" to="." method="_on_skill_4_pressed"]
+[connection signal="pressed" from="SkillBar/Skill5" to="." method="_on_skill_5_pressed"]
+[connection signal="pressed" from="ActionButtons/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="ActionButtons/DodgeButton" to="." method="_on_dodge_button_pressed"]
