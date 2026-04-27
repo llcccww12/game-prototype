@@ -8,16 +8,14 @@ extends Node2D
 @export var duration: float = 0.3
 @export var cooldown: float = 4.0
 
-var player: Node = null
 var hit_enemies: Array = []
 
-func _ready():
-	player = get_node_or_null("/root/Game/Player")
-
 func execute() -> void:
-	if not player:
+	if not Global.player_node:
+		queue_free()
 		return
 
+	var player = Global.player_node
 	var start_pos = player.global_position
 	var dash_dir = player.facing_direction
 	if dash_dir == Vector2.ZERO:
@@ -29,14 +27,14 @@ func execute() -> void:
 	var space = player.get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
 	var result = space.intersect_ray(query)
-	if result:
+	if result.size() > 0:
 		end_pos = result.position - dash_dir * 10
 
 	# Animate dash
 	var tween = create_tween()
 	tween.tween_property(player, "global_position", end_pos, duration)
 	tween.set_trans(Tween.TRANS_QUAD)
-	tween.set_ease(Tween.EASE_OUT
+	tween.set_ease(Tween.EASE_OUT)
 
 	player.is_invulnerable = true
 
@@ -52,14 +50,16 @@ func execute() -> void:
 	queue_free()
 
 func _damage_enemies_at(pos: Vector2) -> void:
-	var space = player.get_world_2d().direct_space_state
+	if not Global.player_node:
+		return
+	var space = Global.player_node.get_world_2d().direct_space_state
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = pos
-	query.collision_mask = 2  # Enemy layer
+	query.collision_mask = 2
 
 	var enemies = space.intersect_point(query, 10)
 	for result in enemies:
 		var enemy = result.collider
-		if enemy is Enemy and enemy not in hit_enemies:
+		if enemy.has_method("take_damage") and enemy not in hit_enemies:
 			hit_enemies.append(enemy)
-			enemy.take_damage(damage, player.facing_direction * 50)
+			enemy.take_damage(damage, Global.player_node.facing_direction * 50)

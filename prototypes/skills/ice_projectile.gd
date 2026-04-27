@@ -32,9 +32,6 @@ func _physics_process(delta: float):
 func _on_body_entered(body: Node) -> void:
 	if body is Enemy:
 		body.take_damage(damage, direction * knockback)
-		# Ice effect (slow for a moment)
-		if body.has_method("apply_slow"):
-			body.apply_slow(0.5, 1.0)
 		queue_free()
 	elif body is StaticBody2D:
 		queue_free()

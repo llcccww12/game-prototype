@@ -8,15 +8,12 @@ extends Node2D
 @export var iframes_duration: float = 0.2
 @export var cooldown: float = 3.0
 
-var player: Node = null
-
-func _ready():
-	player = get_node_or_null("/root/Game/Player")
-
 func execute() -> void:
-	if not player:
+	if not Global.player_node:
+		queue_free()
 		return
 
+	var player = Global.player_node
 	var blink_dir = player.facing_direction
 	if blink_dir == Vector2.ZERO:
 		blink_dir = Vector2.RIGHT
@@ -28,34 +25,28 @@ func execute() -> void:
 	var space = player.get_world_2d().direct_space_state
 	var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
 	var result = space.intersect_ray(query)
-	if result:
+	if result.size() > 0:
 		end_pos = result.position - blink_dir * 5
 
-	# Teleport effect at start
 	_spawn_teleport_effect(start_pos)
-
 	player.global_position = end_pos
-
-	# Damage enemies at arrival point
 	_damage_enemies_at(end_pos)
 
-	# Grant i-frames
 	player.is_invulnerable = true
 	await get_tree().create_timer(iframes_duration).timeout
-	player.is_invulnerable = false
-
-	# Teleport effect at end
+	if player:
+		player.is_invulnerable = false
 	_spawn_teleport_effect(end_pos)
 
 	queue_free()
 
 func _spawn_teleport_effect(pos: Vector2) -> void:
 	var effect = Node2D.new()
-	effect.position = pos
+	effect.global_position = pos
 
 	var circle = ColorRect.new()
 	circle.size = Vector2(30, 30)
-	circle.modulate = Color(0.5, 0.8, 1, 0.5)
+	circle.color = Color(0.5, 0.8, 1, 0.5)
 	effect.add_child(circle)
 
 	get_parent().add_child(effect)
@@ -65,13 +56,13 @@ func _spawn_teleport_effect(pos: Vector2) -> void:
 	tween.tween_callback(effect.queue_free)
 
 func _damage_enemies_at(pos: Vector2) -> void:
-	var space = player.get_world_2d().direct_space_state
+	var space = Global.player_node.get_world_2d().direct_space_state
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = pos
 	query.collision_mask = 2
 
-	var enemies = space.intersect_point(query, 10)
+	var enemies = space.intect_point(query, 10)
 	for result in enemies:
 		var enemy = result.collider
-		if enemy is Enemy:
+		if enemy.has_method("take_damage"):
 			enemy.take_damage(damage, Vector2.ZERO)
